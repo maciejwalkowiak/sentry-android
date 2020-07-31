@@ -3,6 +3,7 @@ package io.sentry.core.protocol;
 import io.sentry.core.IUnknownPropertiesConsumer;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.jetbrains.annotations.ApiStatus;
 
 /** The Sentry stacktrace. */
@@ -39,7 +40,7 @@ public final class SentryStackTrace implements IUnknownPropertiesConsumer {
   @ApiStatus.Internal
   @Override
   public void acceptUnknownProperties(Map<String, Object> unknown) {
-    this.unknown = unknown;
+    this.unknown = new ConcurrentHashMap<>(unknown);
   }
 
   public Map<String, String> getRegisters() {
