@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import io.sentry.core.IUnknownPropertiesConsumer;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.jetbrains.annotations.ApiStatus;
 
 /** The Sentry stack frame. */
@@ -185,7 +184,7 @@ public final class SentryStackFrame implements IUnknownPropertiesConsumer {
   @ApiStatus.Internal
   @Override
   public void acceptUnknownProperties(Map<String, Object> unknown) {
-    this.unknown = new ConcurrentHashMap<>(unknown);
+    this.unknown = unknown;
   }
 
   public String getRawFunction() {

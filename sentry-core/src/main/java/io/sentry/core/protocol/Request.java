@@ -2,7 +2,6 @@ package io.sentry.core.protocol;
 
 import io.sentry.core.IUnknownPropertiesConsumer;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.jetbrains.annotations.ApiStatus;
 
 public final class Request implements IUnknownPropertiesConsumer {
@@ -85,6 +84,6 @@ public final class Request implements IUnknownPropertiesConsumer {
   @ApiStatus.Internal
   @Override
   public void acceptUnknownProperties(Map<String, Object> unknown) {
-    this.unknown = new ConcurrentHashMap<>(unknown);
+    this.unknown = unknown;
   }
 }
