@@ -18,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
  * Appender for logback in charge of sending the logged events to a Sentry server.
  */
 public final class SentryAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
-  public static final String SENTRY_DSN_PROPERTY_NAME = "SENTRY_DSN";
   private @Nullable String dsn;
   private @Nullable String environment;
   private @Nullable Integer maxBreadcrumbs;
@@ -33,7 +32,6 @@ public final class SentryAppender extends UnsynchronizedAppenderBase<ILoggingEve
 
   @Override
   public void start() {
-    final String dsn = resolveDsn();
     if (dsn != null) {
       Sentry.init(
         options -> {
@@ -53,22 +51,6 @@ public final class SentryAppender extends UnsynchronizedAppenderBase<ILoggingEve
       );
     }
     super.start();
-  }
-
-  /**
-   * Resolves DSN from property set on the appender or environment properties or system property.
-   *
-   * @return DSN or {@code null}
-   */
-  private @Nullable String resolveDsn() {
-    if (this.dsn != null) {
-      return this.dsn;
-    }
-    final String environmentDsn = System.getenv(SENTRY_DSN_PROPERTY_NAME);
-    if (environmentDsn != null) {
-      return environmentDsn;
-    }
-    return System.getProperty(SENTRY_DSN_PROPERTY_NAME);
   }
 
   @Override
